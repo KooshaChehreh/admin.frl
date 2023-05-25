@@ -55,6 +55,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "HotelManager.urls"
 
+STATIC_ROOT = BASE_DIR / "static"
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
