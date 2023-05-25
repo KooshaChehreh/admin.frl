@@ -31,10 +31,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "django.contrib.contenttypes",
+    "grappelli.dashboard",
     "grappelli",
     "django.contrib.admin",
     "django.contrib.auth",
-    "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
@@ -133,3 +134,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.User"
+
+GRAPPELLI_ADMIN_TITLE = "Hotel Management System"
+GRAPPELLI_CLEAN_INPUT_TYPES = True
+GRAPPELLI_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
