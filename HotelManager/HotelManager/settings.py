@@ -80,16 +80,14 @@ WSGI_APPLICATION = "HotelManager.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "mydb",
-        "USER": "test",
-        "PASSWORD": "test377368",
-        "HOST": "localhost",
-        "PORT": "3306",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db/db.sqlite3',
     }
 }
+
 
 
 # Password validation

@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    command: sh -c "python manage.py migrate && gunicorn HotelManager.wsgi -b 0.0.0.0:8000"
+    container_name: app
+    volumes:
+      - .:/app
+      - db:/app/db
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"
+    restart: always
+
+volumes:
+  db:
