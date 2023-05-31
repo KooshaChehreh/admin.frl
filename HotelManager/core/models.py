@@ -9,8 +9,8 @@ class BaseModel(models.Model):
 
     objects = BaseManager()
 
-    created_at = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='Created at')
-    updated_at = models.DateTimeField(auto_now=True, editable=False, verbose_name='Updated at')
+    created_at = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='Created at', null=True)
+    updated_at = models.DateTimeField(auto_now=True, editable=False, verbose_name='Updated at', null=True)
 
     deleted_at = models.DateTimeField(
         null=True,
@@ -29,6 +29,7 @@ class BaseModel(models.Model):
     )
 
     is_deleted = models.BooleanField(
+        null=True,
         default=False,
         editable=False,
         db_index=True,
@@ -37,6 +38,7 @@ class BaseModel(models.Model):
     )
 
     is_active = models.BooleanField(
+        null=True,
         default=True,
         editable=False,
         verbose_name='Active status',
