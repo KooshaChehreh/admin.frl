@@ -6,6 +6,8 @@ services:
     volumes:
       - .:/app
       - db:/app/db
+      - ./db:/app/db
+      - ./static:/app/static
     ports:
       - "8000:8000"
     expose:
