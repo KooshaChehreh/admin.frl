@@ -66,7 +66,8 @@ class Country(BaseModel):
 class Booking(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_bookings')
     package = models.ManyToManyField('Package', related_name='package_bookings')
-    date = models.CharField(max_length=20, verbose_name='Date', null=True, blank=True)
+    # date = models.CharField(max_length=20, verbose_name='Date', null=True, blank=True)
+    date = models.DateField(max_length=20, verbose_name='Date', null=True, blank=True)
     number_of_people = models.PositiveIntegerField(verbose_name='Number Of People', null=True, blank=True)
     total = models.PositiveIntegerField(verbose_name='Total', null=True, blank=True)
     booking_status = models.CharField(max_length=100, verbose_name='Booking Status', null=True, blank=True)
