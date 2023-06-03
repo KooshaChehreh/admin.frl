@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <p>Register</p>
+
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Register" class="btn bg-light text-dark">
+    </form>
+
+{% endblock %}
+
+
+
+
+
+
