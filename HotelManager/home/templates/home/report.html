@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+
+{% block extrastyle %}
+    li {
+    list-style: none;
+    }
+{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid p-2">
+        <div class="row p-2">
+            <div class="col-md-3">
+                <div class="card p-5">
+                    <a href="{% url 'home:report' %}" class="btn btn-primary mb-5">Show All</a>
+                    <form action="" method="get" class="mt-2" novalidate>
+                        {{ form.as_p }}
+                        <div class="text-center mt-4">
+                            <input type="submit" value="Filter" class="btn btn-primary w-50">
+                        </div>
+                        <table class="table mt-5">
+                            <thead>
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Total Income</td>
+                                <td>{{ total_income }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card">
+{#                    {% for booking in bookings %}#}
+                        <h2 class="card-header text-center">wfwef</h2>
+                        {#            {% for key, value in times.items %}#}
+{#                                      {% if forloop.counter == 1 %}#}
+                        <div class="card-body p-3">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Number of peoples</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                                </thead>
+
+                                <tbody class="m--5">
+                                {% for booking in bookings %}
+
+                                <tr>
+                                    <td>{{ booking.user.name }}</td>
+                                    <td style="font-size:1.2rem">{{ booking.number_of_people }}</td>
+                                    <td>{{ booking.total }}</td>
+                                    <td>{{ booking.date|date:"F j, Y" }}</td>
+                                    <td>{{ booking.booking_status }}</td>
+
+                                </tr>
+
+{#                                    <tr>#}
+{#                                    {% for package in booking.package.all %}#}
+{#                                    <td>{{ package.title }}</td>#}
+{##}
+{#                                    {% endfor %}#}
+{#                                    </tr>#}
+
+
+                                {#                    <li>{{ time }}</li>#}
+                                {#                  {% elif forloop.counter == 2 %}#}
+
+{#                                <tr>#}
+{#                                    <td colspan="3" style="font-size: 1rem; color: dodgerblue"#}
+{#                                        class="fw-bold text-center">#}
+{#                                        Time: 111#}
+{#                                    </td>#}
+                                    {#                    {% elif forloop.counter == 3 %}#}
+{#                                    <td colspan="1" style="font-size: 1rem; color: dodgerblue"#}
+{#                                        class="fw-bold text-center">#}
+{#                                        Percent: 234#}
+{#                                    </td>#}
+                                    {#                    {% else %}#}
+{#                                    <td colspan="2" style="font-size: 1rem; color: dodgerblue"#}
+{#                                        class="fw-bold text-center">#}
+{#                                        Income: 234#}
+{#                                    </td>#}
+{#                                </tr>#}
+                                 {% endfor %}
+
+                                </tbody>
+                            </table>
+                            {#              {% endif %}#}
+
+                            {#            {% endfor %}#}
+                        </div>
+
+{#                    {% endfor %}#}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -49,3 +49,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         return "Super User" if self.is_superuser else self.groups.get()
 
     role.short_description = 'Role'
+
+
+# one time password
+class OtpCode(models.Model):
+    phone_number = models.CharField(max_length=11, unique=True)
+    code = models.PositiveIntegerField()
+    created = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.phone_number} - {self.code} - {self.created}'

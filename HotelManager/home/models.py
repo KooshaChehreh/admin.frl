@@ -37,6 +37,9 @@ class RegisterRequest(BaseModel):
     login_token = models.CharField(max_length=30, verbose_name='Login Token', null=True, blank=True)
     member_detail = models.ForeignKey('MemberDetail', on_delete=models.CASCADE, related_name='register_requests')
 
+    def __str__(self):
+        return f"{self.id} - {self.first_name}"
+
 
 class MemberDetail(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='mem_details')
@@ -57,25 +60,41 @@ class MemberDetail(BaseModel):
     profession = models.CharField(max_length=100, verbose_name='Profession', null=True, blank=True)
     organization = models.CharField(max_length=191, verbose_name='Organization', null=True, blank=True)
 
+    def __str__(self):
+        return f"{self.id} - {self.first_name} {self.last_name}"
+
 
 class Country(BaseModel):
     country = models.CharField(max_length=120, verbose_name='Country', null=True, blank=True)
     code = models.CharField(max_length=4, verbose_name='Code', null=True, blank=True)
 
+    class Meta:
+        verbose_name = 'Country'
+        verbose_name_plural = 'Countries'
+
+    def __str__(self):
+        return f"{self.country} - {self.code}"
+
 
 class Booking(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_bookings')
     package = models.ManyToManyField('Package', related_name='package_bookings')
-    date = models.CharField(max_length=20, verbose_name='Date', null=True, blank=True)
+    date = models.DateField(max_length=20, verbose_name='Date', null=True, blank=True)
     number_of_people = models.PositiveIntegerField(verbose_name='Number Of People', null=True, blank=True)
     total = models.PositiveIntegerField(verbose_name='Total', null=True, blank=True)
     booking_status = models.CharField(max_length=100, verbose_name='Booking Status', null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.id} - {self.user} - {self.package}"
 
 
 class Payment(BaseModel):
     booking = models.OneToOneField(Booking, on_delete=models.CASCADE, related_name='payment')
     date = models.DateField(verbose_name='Date', null=True, blank=True)
     amount = models.CharField(max_length=255, verbose_name='Amount', null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.id} - {self.booking} - {self.amount}"
 
 
 class Package(BaseModel):
@@ -89,6 +108,9 @@ class Package(BaseModel):
     per_amount = models.PositiveIntegerField(verbose_name='Per Amount', null=True, blank=True)
     sort = models.IntegerField(verbose_name='Sort', null=True, blank=True)
 
+    def __str__(self):
+        return f"{self.id} - {self.title} - {self.sub_title}"
+
 
 class PackagePhoto(BaseModel):
     package = models.ForeignKey(Package, on_delete=models.CASCADE, related_name='package_photos')
@@ -96,14 +118,23 @@ class PackagePhoto(BaseModel):
     size = models.CharField(max_length=10, verbose_name='Size', null=True, blank=True)
     sort = models.IntegerField(verbose_name='Sort', null=True, blank=True)
 
+    def __str__(self):
+        return f"{self.id} - {self.package}"
+
 
 class Page(BaseModel):
     page_name = models.CharField(max_length=100, verbose_name='Page Name', null=True, blank=True)
     pdf_file = models.CharField(max_length=200, verbose_name='PDF File', null=True, blank=True)
     description = models.TextField(verbose_name='Description')
 
+    def __str__(self):
+        return f"{self.id} - {self.page_name}"
+
 
 class HomeSlider(BaseModel):
     image = models.ImageField(verbose_name='Image', null=True, blank=True)
     sort = models.IntegerField(verbose_name='Sort', null=True, blank=True)
     caption = models.CharField(max_length=100, verbose_name='Caption', null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.id} - {self.image} - {self.caption}"
