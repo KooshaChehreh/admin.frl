@@ -68,6 +68,10 @@ class Country(BaseModel):
     country = models.CharField(max_length=120, verbose_name='Country', null=True, blank=True)
     code = models.CharField(max_length=4, verbose_name='Code', null=True, blank=True)
 
+    class Meta:
+        verbose_name = 'Country'
+        verbose_name_plural = 'Countries'
+
     def __str__(self):
         return f"{self.country} - {self.code}"
 
