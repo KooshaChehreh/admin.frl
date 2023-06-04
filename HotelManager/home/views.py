@@ -47,18 +47,17 @@ class ReportView(LoginRequiredMixin, View):
         form = self.class_form(request.GET)
         if form.is_valid() and any(form.cleaned_data.values()):
             cd = form.cleaned_data
+            bookings = Booking.objects.all()
             for key, value in cd.items():
-                pass
                 if value:
                     if key == 'start':
-                        bookings = Booking.objects.filter(date__gte=value)
+                        bookings = bookings.filter(date__gte=value)
                     elif key == 'end':
-                        bookings = Booking.objects.filter(date__lte=value)
+                        bookings = bookings.filter(date__lte=value)
 
         else:
             start, end = this_month_start_end()
             bookings = Booking.objects.filter(date__gte=start, date__lte=end)
-            # bookings = Booking.objects.all()
 
         total_income = 0
         for booking in bookings:
