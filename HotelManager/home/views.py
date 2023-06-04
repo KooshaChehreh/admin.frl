@@ -8,7 +8,7 @@ from utils import this_month_start_end
 from django.contrib import messages
 
 
-class ProfileView(View):
+class ProfileView(LoginRequiredMixin, View):
     form = UpdateProfileForm2
     template_name = 'home/profile.html'
 
@@ -45,9 +45,11 @@ class ReportView(LoginRequiredMixin, View):
 
     def get(self, request):
         form = self.class_form(request.GET)
+        bookings = Booking.objects.all()
+        if not request.user.is_admin:
+            bookings = bookings.filter(user=request.user)
         if form.is_valid() and any(form.cleaned_data.values()):
             cd = form.cleaned_data
-            bookings = Booking.objects.all()
             for key, value in cd.items():
                 if value:
                     if key == 'start':
@@ -57,7 +59,7 @@ class ReportView(LoginRequiredMixin, View):
 
         else:
             start, end = this_month_start_end()
-            bookings = Booking.objects.filter(date__gte=start, date__lte=end)
+            bookings = bookings.filter(date__gte=start, date__lte=end)
 
         total_income = 0
         for booking in bookings:
