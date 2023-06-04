@@ -36,50 +36,55 @@ Profile
                             </h3>
                     </div>
                     <br>
-                    {% for booking in bookings %}
-                    <div class="col-md-6">
-                        <div class="card mb-5">
-                            <div class="card-body text-dark">
-                                <div class="row d-flex">
-                                    <div class="col-6">
-                                        <p class="font-italic me-1 text-dark text-start ms-2">
-                                            Code: {{ booking.id }}
-                                        </p>
+                    {% if bookings %}
+                        {% for booking in bookings %}
+                        <div class="col-md-6">
+                            <div class="card mb-5">
+                                <div class="card-body text-dark">
+                                    <div class="row d-flex">
+                                        <div class="col-6">
+                                            <p class="font-italic me-1 text-dark text-start ms-2">
+                                                Code: {{ booking.id }}
+                                            </p>
+                                        </div>
+                                        <div class="col-6">
+                                            <p class="font-italic me-1 text-end me-2">
+                                                Date: {{ booking.date }}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="col-6">
-                                        <p class="font-italic me-1 text-end me-2">
-                                            Date: {{ booking.date }}
-                                        </p>
+
+                                    <div class="row d-flex">
+                                        <div class="col-6">
+                                            <p class="font-italic me-1 text-dark text-start ms-2">
+                                                Number of people: {{ booking.number_of_people }}
+                                            </p>
+                                        </div>
+                                        <div class="col-6">
+                                            <p class="font-italic me-1 text-end me-2">
+                                                Status: {{ booking.booking_status }}
+                                            </p>
+                                        </div>
                                     </div>
+
+                                    <div class="row d-flex mt-3">
+                                        <div class="col-6">
+                                            <p class="font-italic me-1 text-dark text-start ms-2">
+                                                Total: {{ booking.total }} T
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+
                                 </div>
-
-                                <div class="row d-flex">
-                                    <div class="col-6">
-                                        <p class="font-italic me-1 text-dark text-start ms-2">
-                                            Number of people: {{ booking.number_of_people }}
-                                        </p>
-                                    </div>
-                                    <div class="col-6">
-                                        <p class="font-italic me-1 text-end me-2">
-                                            Status: {{ booking.booking_status }}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="row d-flex mt-3">
-                                    <div class="col-6">
-                                        <p class="font-italic me-1 text-dark text-start ms-2">
-                                            Total: {{ booking.total }} T
-                                        </p>
-                                    </div>
-
-                                </div>
-
-
                             </div>
                         </div>
-                    </div>
-                    {% endfor %}
+                        {% endfor %}
+                    {% else %}
+                        <h4 class="text-center mb-5">There is nothing to show</h4>
+
+                    {% endif %}
                 </div>
                 <div class="card mb-4">
                     <form class="p-5 text-dark" action="" method="post" novalidate>
