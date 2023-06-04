@@ -1,24 +1,39 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views import View
-
-from home.forms import TimeFilterForm
-from home.models import Booking
+from django.contrib.auth.decorators import user_passes_test
+from home.forms import TimeFilterForm, UpdateProfileForm
+from home.models import Booking, MemberDetail
 from utils import this_month_start_end
 
 
-# Create your views here.
 class ProfileView(View):
-    def get(self, request, category_slug: str = None):
-        return render(request, 'home/profile.html')
+    form = UpdateProfileForm()
+
+    def get(self, request):
+        user = request.user
+        bookings = Booking.objects.filter(user=user)
+        member_detail = MemberDetail.objects.filter(user=user)
+        print(user)
+        print(member_detail[0].address)
+        print(bookings)
+        return render(request, 'home/profile.html',
+                      {'form': self.form, 'bookings': bookings, 'member_detail': member_detail[0]})
+
+    # def post(self, request, *args, **kwargs):
+    # form = self.form(request.POST, instance=)
+    # if form.is_valid():
+    # new_post = form.save(commit=False)
+    # new_post.save()
+    # messages.success(request, 'You update', 'success')
+    # return redirect('home:detail', post.id, post.slug)
 
 
 class ReportView(LoginRequiredMixin, View):
     class_form = TimeFilterForm
     template_name = 'home/report.html'
 
-    def get(self, request, category_slug: str = None):
-        lists = {12: '12', 13: '13', 14: '14', 15: '15', 16: '16', 17: '17', 18: '18'}
+    def get(self, request):
         form = self.class_form(request.GET)
         if form.is_valid() and any(form.cleaned_data.values()):
             cd = form.cleaned_data
