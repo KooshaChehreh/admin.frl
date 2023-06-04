@@ -5,7 +5,6 @@ services:
     container_name: app
     volumes:
       - .:/app
-      - db:/app/db
       - ./db:/app/db
       - ./static:/app/static
     ports:
@@ -14,5 +13,4 @@ services:
       - "8000"
     restart: always
 
-volumes:
-  db:
+
