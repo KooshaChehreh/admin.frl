@@ -17,8 +17,11 @@ Profile
                         <img src="{% static 'pngfind.com-user-icon-png-2924933.png' %}"
                              alt="avatar"
                              class="rounded-circle img-fluid" style="width: 150px;">
-                        <h5 class="my-3 text-dark">{{ member_detail.first_name }} {{ member_detail.last_name }}</h5>
-
+                        {% if member_detail is not None %}
+                            <h5 class="my-3 text-dark">{{ member_detail.first_name }} {{ member_detail.last_name }}</h5>
+                        {% else %}
+                            <h5 class="my-3 text-dark">No data is submitted</h5>
+                        {% endif %}
 
                     </div>
                 </div>
