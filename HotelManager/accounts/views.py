@@ -27,14 +27,11 @@ class UserRegisterView(View):
         return render(request, self.template_name, {'form': form})
 
 
-
-
-
 class UserLogoutView(LoginRequiredMixin, View):
     def get(self, request):
         logout(request)
-        messages.success(request, 'خروج از حساب کاربری با موفقیت انجام شد', 'success')
-        return redirect('home:home')
+        messages.success(request, 'You logged out successfully', 'success')
+        return redirect('home:profile')
 
 
 class UserLoginView(View):
@@ -52,7 +49,7 @@ class UserLoginView(View):
             user = authenticate(request, email=cd['email'], password=cd['password'])
             if user is not None:
                 login(request, user)
-                messages.success(request, 'ورود به حساب کاربری با موفقیت انجام شد', 'success')
+                messages.success(request, 'You logged in successfully', 'success')
                 return redirect('home:profile')
-            messages.error(request, 'نام کاربری یا رمز عبور اشتباه است', 'danger')
+            messages.error(request, 'Wrong password or email', 'danger')
         return render(request, self.template_name, {'form': form})
