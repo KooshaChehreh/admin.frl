@@ -1,32 +1,42 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.decorators import user_passes_test
-from home.forms import TimeFilterForm, UpdateProfileForm
+from home.forms import TimeFilterForm, UpdateProfileForm2
 from home.models import Booking, MemberDetail
 from utils import this_month_start_end
+from django.contrib import messages
 
 
 class ProfileView(View):
-    form = UpdateProfileForm()
+    form = UpdateProfileForm2
+    template_name = 'home/profile.html'
+
+    def setup(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            self.user = request.user
+            self.bookings = Booking.objects.filter(user=self.user)
+            member_detail = MemberDetail.objects.filter(user=self.user)
+            self.member_detail = member_detail.get() if member_detail.exists() else None
+        return super().setup(request, *args, **kwargs)
 
     def get(self, request):
-        user = request.user
-        bookings = Booking.objects.filter(user=user)
-        member_detail = MemberDetail.objects.filter(user=user)
-        print(user)
-        print(member_detail[0].address)
-        print(bookings)
-        return render(request, 'home/profile.html',
-                      {'form': self.form, 'bookings': bookings, 'member_detail': member_detail[0]})
+        form = self.form(instance=self.member_detail) if self.member_detail else self.form
+        bookings = self.bookings
+        member_detail = self.member_detail
+        return render(request, self.template_name,
+                      {'form': form, 'bookings': bookings, 'member_detail': member_detail})
 
-    # def post(self, request, *args, **kwargs):
-    # form = self.form(request.POST, instance=)
-    # if form.is_valid():
-    # new_post = form.save(commit=False)
-    # new_post.save()
-    # messages.success(request, 'You update', 'success')
-    # return redirect('home:detail', post.id, post.slug)
+    def post(self, request, *args, **kwargs):
+        form = self.form(request.POST)
+        if self.member_detail:
+            form.instance = self.member_detail
+        if form.is_valid():
+            member_detail = form.save(commit=False)
+            member_detail.user = request.user
+            member_detail.save()
+            messages.success(request, 'Your information updated successfully', 'success')
+        return redirect('home:profile')
 
 
 class ReportView(LoginRequiredMixin, View):

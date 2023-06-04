@@ -2,6 +2,7 @@ from django import forms
 from accounts.models import User
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from .models import MemberDetail
 
 
 class TimeFilterForm(forms.Form):
@@ -29,3 +30,48 @@ class UpdateProfileForm(forms.Form):
     nic = forms.CharField(label='NIC', widget=forms.TextInput(attrs={'class': 'w-50 form-control'}))
     profession = forms.CharField(label='Profession', widget=forms.TextInput(attrs={'class': 'w-50 form-control'}))
     organization = forms.CharField(label='Organization', widget=forms.TextInput(attrs={'class': 'w-50 form-control'}))
+
+
+class UpdateProfileForm2(forms.ModelForm):
+    class Meta:
+        model = MemberDetail
+        fields = ('email', 'first_name', 'middle_name', 'last_name', 'address', 'city', 'post_code',
+                  'state', 'country', 'country_code', 'phone_number', 'whatsapp_number', 'dob',
+                  'nic', 'profession', 'organization')
+        widgets = {
+            'email': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+            'middle_name': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+            'address': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+            'city': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+            'post_code': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+            'state': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+            'country': forms.Select(attrs={'class': 'w-50 form-control'}),
+            'country_code': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+            'phone_number': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+            'whatsapp_number': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+            'dob': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+            'nic': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+            'profession': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+            'organization': forms.TextInput(attrs={'class': 'w-50 form-control'}),
+        }
+
+        labels = {
+            'email': 'Email',
+            'first_name': 'First Name',
+            'middle_name': 'Middle Name',
+            'last_name': 'Last Name',
+            'address': 'Address',
+            'city': 'City',
+            'post_code': 'Post Code',
+            'state': 'State',
+            'country': 'Country',
+            'country_code': 'Country Code',
+            'phone_number': 'Phone No',
+            'whatsapp_number': 'Whatsapp No',
+            'dob': 'DOB',
+            'nic': 'NIC',
+            'profession': 'Profession',
+            'organization': 'Organization'
+        }
