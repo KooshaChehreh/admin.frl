@@ -128,6 +128,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.User"
 
-GRAPPELLI_ADMIN_TITLE = "Hotel Management System"
+GRAPPELLI_ADMIN_TITLE = "Tourism Management System"
 GRAPPELLI_CLEAN_INPUT_TYPES = True
 GRAPPELLI_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
