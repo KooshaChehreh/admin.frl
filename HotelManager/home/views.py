@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth.decorators import user_passes_test
+from home.forms import TimeFilterForm, UpdateProfileForm2
 from home.forms import TimeFilterForm, UpdateProfileForm2, CartAddProductForm
 from home.models import Booking, MemberDetail, Package
 from utils import this_month_start_end
@@ -78,6 +79,18 @@ class ReportView(LoginRequiredMixin, View):
                       })
 
 
+# class PaymentView(View):
+#
+#     def post(self, request):
+#         form = CartAddProductForm(request.POST)
+#         if form.is_valid():
+#             cd = form.cleaned_data
+#             quantity = cd['quantity']
+#         package_id = request.POST.get('package_id')
+#         package = Package.objects.get(package_id=package_id)
+#         return render(request, 'payment.html', {"package": package})
+
+
 class PackagesView(View):
     def get(self, request):
         packages = Package.objects.all()
@@ -85,7 +98,26 @@ class PackagesView(View):
 
 
 class ProductDetailView(View):
+    form_class = CartAddProductForm
+
+    def setup(self, request, *args, **kwargs):
+        self.product = get_object_or_404(Package, id=kwargs['id'])
+        return super().setup(request, *args, *kwargs)
+
     def get(self, request, id):
-        product = get_object_or_404(Package, id=id)
-        form = CartAddProductForm()
-        return render(request, 'home/detail.html', {'product': product, 'form': form})
+        form = self.form_class
+        return render(request, 'home/detail.html', {'product': self.product, 'form': form})
+
+    def post(self, request, id):
+        form = CartAddProductForm(request.POST)
+        package = {}
+        if form.is_valid():
+            cd = form.cleaned_data
+            quantity = cd['quantity']
+            amount = self.product.per_amount * quantity
+            package = {
+                "product": self.product,
+                "quantity": quantity,
+                "amount": amount
+            }
+        return render(request, 'home/payment.html', package)

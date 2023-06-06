@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="text-center">
+
+    {% if product.title%}
+    <h1>Final Payment</h1>
+    {% endif %}
+    <br>
+    <br>
+
+    {% if product.title%}
+    <h3>Title : {{ product.title }}</h3>
+    {% endif %}
+
+
+    <br>
+    <br>
+
+    {% if quantity %}
+    <p> Your order quantity : {{ quantity }}</p>
+    {% endif %}
+
+    {% if amount %}
+    <p>Total Amount : {{ amount }}</p>
+    {% endif %}
+
+
+</div>
+
+
+{% endblock %}
