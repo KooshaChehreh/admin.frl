@@ -8,6 +8,11 @@ from utils import this_month_start_end
 from django.contrib import messages
 
 
+class LandingView(View):
+    def get(self, request):
+        return render(request, 'home/landing.html')
+
+
 class ProfileView(LoginRequiredMixin, View):
     form = UpdateProfileForm2
     template_name = 'home/profile.html'
@@ -71,6 +76,13 @@ class ReportView(LoginRequiredMixin, View):
                           "bookings": bookings,
                           "total_income": total_income,
                       })
+
+
+class PackagesView(View):
+    def get(self, request):
+        packages = Package.objects.all()
+        return render(request, 'home/packages.html', {"packages": packages})
+
 
 class ProductDetailView(View):
     def get(self, request, id):
