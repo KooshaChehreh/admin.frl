@@ -1,9 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth.decorators import user_passes_test
-from home.forms import TimeFilterForm, UpdateProfileForm2
-from home.models import Booking, MemberDetail
+from home.forms import TimeFilterForm, UpdateProfileForm2, CartAddProductForm
+from home.models import Booking, MemberDetail, Package
 from utils import this_month_start_end
 from django.contrib import messages
 
@@ -71,3 +71,9 @@ class ReportView(LoginRequiredMixin, View):
                           "bookings": bookings,
                           "total_income": total_income,
                       })
+
+class ProductDetailView(View):
+    def get(self, request, id):
+        product = get_object_or_404(Package, id=id)
+        form = CartAddProductForm()
+        return render(request, 'home/detail.html', {'product': product, 'form': form})
