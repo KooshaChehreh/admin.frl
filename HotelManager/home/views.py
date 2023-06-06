@@ -9,6 +9,11 @@ from utils import this_month_start_end
 from django.contrib import messages
 
 
+class LandingView(View):
+    def get(self, request):
+        return render(request, 'home/landing.html')
+
+
 class ProfileView(LoginRequiredMixin, View):
     form = UpdateProfileForm2
     template_name = 'home/profile.html'
@@ -86,8 +91,13 @@ class ReportView(LoginRequiredMixin, View):
 #         return render(request, 'payment.html', {"package": package})
 
 
-class ProductDetailView(View):
+class PackagesView(View):
+    def get(self, request):
+        packages = Package.objects.all()
+        return render(request, 'home/packages.html', {"packages": packages})
 
+
+class ProductDetailView(View):
     form_class = CartAddProductForm
 
     def setup(self, request, *args, **kwargs):
@@ -104,7 +114,7 @@ class ProductDetailView(View):
         if form.is_valid():
             cd = form.cleaned_data
             quantity = cd['quantity']
-            amount = self.product.per_amount*quantity
+            amount = self.product.per_amount * quantity
             package = {
                 "product": self.product,
                 "quantity": quantity,
