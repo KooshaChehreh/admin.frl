@@ -74,16 +74,40 @@ class ReportView(LoginRequiredMixin, View):
                       })
 
 
-class PaymentView(View):
-
-    def post(self, request):
-        package_id = request.POST.get('package_id')
-        package = Package.objects.get(package_id=package_id)
-        return render(request, 'payment.html', {"package": package})
+# class PaymentView(View):
+#
+#     def post(self, request):
+#         form = CartAddProductForm(request.POST)
+#         if form.is_valid():
+#             cd = form.cleaned_data
+#             quantity = cd['quantity']
+#         package_id = request.POST.get('package_id')
+#         package = Package.objects.get(package_id=package_id)
+#         return render(request, 'payment.html', {"package": package})
 
 
 class ProductDetailView(View):
+
+    form_class = CartAddProductForm
+
+    def setup(self, request, *args, **kwargs):
+        self.product = get_object_or_404(Package, id=kwargs['id'])
+        return super().setup(request, *args, *kwargs)
+
     def get(self, request, id):
-        product = get_object_or_404(Package, id=id)
-        form = CartAddProductForm()
-        return render(request, 'home/detail.html', {'product': product, 'form': form})
+        form = self.form_class
+        return render(request, 'home/detail.html', {'product': self.product, 'form': form})
+
+    def post(self, request, id):
+        form = CartAddProductForm(request.POST)
+        package = {}
+        if form.is_valid():
+            cd = form.cleaned_data
+            quantity = cd['quantity']
+            amount = self.product.per_amount*quantity
+            package = {
+                "product": self.product,
+                "quantity": quantity,
+                "amount": amount
+            }
+        return render(request, 'home/payment.html', package)
