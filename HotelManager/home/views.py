@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.decorators import user_passes_test
 from home.forms import TimeFilterForm, UpdateProfileForm2
-from home.models import Booking, MemberDetail
+from home.models import Booking, MemberDetail, Package
 from utils import this_month_start_end
 from django.contrib import messages
 
@@ -71,3 +71,11 @@ class ReportView(LoginRequiredMixin, View):
                           "bookings": bookings,
                           "total_income": total_income,
                       })
+
+
+class PaymentView(View):
+
+    def post(self, request):
+        package_id = request.POST.get('package_id')
+        package = Package.objects.get(package_id=package_id)
+        return render(request, 'payment.html', {"package": package})

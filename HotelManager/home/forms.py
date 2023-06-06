@@ -75,3 +75,7 @@ class UpdateProfileForm2(forms.ModelForm):
             'profession': 'Profession',
             'organization': 'Organization'
         }
+
+
+class PaymentForm(forms.Form):
+    pass
