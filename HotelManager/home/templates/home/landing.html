@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Landing Page{% endblock %}
+
+
+{% block content %}
+	<div class="container">
+		<br><br><br>
+		<div class="col-md-6 mx-auto my-auto justify-content-space-between">
+			<div class="card text-white text-center" style="opacity: 90%;">
+				<h1 class="card-header text-dark">Tourism System</h1>
+				<div class="p-4 mb-2 bg-dark text-white">
+					<h2 class="text-center text-primary">Welcome</h2>
+					<br>
+					<p style="font-size:20px;" dir="auto">The best packages for you to take a tour</p>
+					<br><br>
+					<div class="row my-auto px-4">
+						<p class="col-md-6 text-start fw-bold" style="font-size:22px" dir="auto">Hope you enjoy!</p>
+						<p class="col-md-6 text-end"><a class="btn btn-primary " href="{% url 'home:packages' %}" role="button">
+							Get Started</a></p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+{% endblock %}
