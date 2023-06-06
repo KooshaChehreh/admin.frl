@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+    <div class="text-center">
+
+
+        {% if product.image %}
+        <img class="w-25" src="{{ product.image.url }}" alt="Temporary Image">
+        {% endif %}
+
+
+        <br>
+        <br>
+        {% if product.title %}
+            <h1>Title : {{ product.title }}</h1>
+        {% endif %}
+
+
+        {% if product.sub_title %}
+            <h1>Sub title : {{ product.sub_title }}</h1>
+        {% endif %}
+
+        <br>
+        <br>
+
+        {% if product.homepage_description %}
+            <p>Homepage description : {{ product.homepage_description }}</p>
+        {% endif %}
+
+        {% if product.show_in_home %}
+            <p>Show in home : {{ product.show_in_home }}</p>
+        {% endif %}
+
+        {% if product.description %}
+            <p>Description : {{ product.description }}</p>
+        {% endif %}
+
+        {% if product.days %}
+            <p>Days : {{ product.days }}</p>
+        {% endif %}
+
+        {% if product.per_amount %}
+            <p>Per amount : {{ product.per_amount }}</p>
+        {% endif %}
+
+        {% if product.sort %}
+            <p>Sort : {{ product.sort }}</p>
+        {% endif %}
+
+        {#    <img class="w-25" src="{{ product.image.url }}" alt="">#}
+        <br>
+        <br>
+        {#    {% if perms.home.add_order %}#}
+
+{#        <form action="{% url 'home:payment' product.id %}" method="post">#}
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn btn-primary">Payment</button>
+        </form>
+
+    </div>
+
+
+{% endblock %}
