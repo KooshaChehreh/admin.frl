@@ -76,6 +76,11 @@ class UpdateProfileForm2(forms.ModelForm):
             'organization': 'Organization'
         }
 
+<<<<<<< HEAD
 
 class PaymentForm(forms.Form):
     pass
+=======
+class CartAddProductForm(forms.Form):
+    quantity = forms.IntegerField(min_value=1, max_value=100, initial=1)
+>>>>>>> 194eba85d02b7bdc6eca59bc4eab644ae326afe0
