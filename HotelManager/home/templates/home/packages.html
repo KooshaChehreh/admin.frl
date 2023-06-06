@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Packages{% endblock %}
+
+{% block content %}
+	<div class="container-fluid">
+		<div class="row mt-3 mx-3">
+{#			<div class="col-6 justify-content-start">#}
+{#				{% for category in categories %}#}
+{##}
+{#					<div class="btn-group">#}
+{#						<a href="{{ category.get_absolute_url }}" class="btn btn-primary">{% trans category.name %}</a>#}
+{#						{% if category.scategory.all %}#}
+{#							<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"#}
+{#											data-bs-toggle="dropdown" aria-expanded="false">#}
+{#								<span class="visually-hidden">Toggle Dropdown</span>#}
+{#							</button>#}
+{##}
+{#							<ul class="dropdown-menu">#}
+{#								{% for sub in category.scategory.all %}#}
+{#									<li><a class="dropdown-item" href="{{ sub.get_absolute_url }}">{% trans sub.name %}</a></li>#}
+{#								{% endfor %}#}
+{#							</ul>#}
+{#						{% endif %}#}
+{#					</div>#}
+{##}
+{##}
+{#				{% endfor %}#}
+{##}
+{#			</div>#}
+
+
+{#			<div class="col-6">#}
+				{# Search #}
+{#				<form action="" method="get" class="input-group mb-4">#}
+{#					{{ form }}#}
+{#					<button type="submit" class="btn btn-primary px-3"><i class="fa fa-search"></i></button>#}
+{#				</form>#}
+{#			</div>#}
+
+
+			{% for package in packages %}
+				<div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+					<div class="card pt-0 pb-4 h-100 text-center">
+						<a href="{% url 'home:product_detail' package.id %}">
+                            {% if package.image %}
+                                <img src="{{ package.image.url }}" class="card-img-top mx-autox px-3"
+                                         width="300px" height="400px"
+                                         style="object-fit: scale-down"
+                                         alt="{{ package.title }}"></a>
+                            {% endif %}
+
+						<div class="row mx-2">
+							<div class="col-12">
+								<p class="fw-bold text-secondary" style="font-size:26px">{{ package.title }}</p>
+							</div>
+
+
+
+{#							{% if product.discount %}#}
+{#								<div class="col-6">#}
+									{#								<a href="" class="btn btn-primary{% if not product.is_available %} disabled {% endif %}"><i#}
+									{#												class="fa-solid fa-cart-plus"></i> Add</a>#}
+{#									<h3 class="text-danger">#}
+{#										<del>${{ product.price_no_discount }}</del>#}
+{#									</h3>#}
+{#								</div>#}
+
+{#							{% endif %}#}
+
+							<br><br>
+
+
+							<a href="{% url 'home:product_detail' package.id %}"
+								 class="col-10 mx-auto btn btn-outline-primary">Details</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+
+{% endblock %}
